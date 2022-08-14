@@ -1,0 +1,3 @@
+
+
+curl "http://localhost:8000/v1/player_id?name=%E3%82%AB%E3%83%AA%E3%82%AC%E3%82%AB%E3%83%AA&server=DIAMOND"
