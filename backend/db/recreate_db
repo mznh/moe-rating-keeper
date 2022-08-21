@@ -1,0 +1,2 @@
+rm rating.db
+sqlite3 -init create_table.sql rating.db < /dev/null

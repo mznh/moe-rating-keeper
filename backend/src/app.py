@@ -1,41 +1,60 @@
 #!/usr/bin/env python3
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import hashlib
+import random
+
+
 
 import models
 import sql
 
 app = FastAPI()
-
 api_version = "/v1"
+# for cors setting
+origins = [
+    "http://localhost:4200",
+    "http://localhost:8000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
-
-@app.get(api_version + "/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    if q:
-        return {"item_id": item_id, "q": q}
-    return {"item_id": item_id}
-
-
-# Player
-
+# Players
 @app.get(api_version + "/players")
 def get_players():
     res = sql.getPlayers()
     print(res)
     return res
 
+# Player
+@app.get(api_version + "/player")
+def get_player(key:str):
+    print(key)
+    res = sql.getPlayer(key)
+    print(res)
+    return res
+
 @app.post(api_version + "/player")
 def create_player(player :models.Player):
-    print(player)
-    res = sql.insertPlayer(player.dict())
+    data = player.dict()
+    key_string = str(int(random.uniform(0,200)))+data["name"]+data["server"]
+    data["key"] = hashlib.md5(key_string.encode()).hexdigest()
+    res = sql.insertPlayer(data)
+    print(key_string)
+    #要エラー処理
     print(res)
-    return {"status": "ok"}
+    return {"status": "ok", "key": data["key"]}
 
 @app.get(api_version + "/player_id")
 def get_player_id(name:str, server:str):

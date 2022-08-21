@@ -1,0 +1,6 @@
+
+. bin/activate
+cd src
+uvicorn app:app
+
+

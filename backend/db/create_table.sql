@@ -1,5 +1,6 @@
 create table players(
   id integer primary key autoincrement,
+  key  text,
   name  text,
   server  text,
   info  text,

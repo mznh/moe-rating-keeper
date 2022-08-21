@@ -1,0 +1,17 @@
+<app-navi-bar> </app-navi-bar>
+
+<div class="create-charactor-form">
+  <mat-form-field appearance="fill">
+    <mat-label>キャラクター名</mat-label> 
+    <input matInput #inputCharactorName [(ngModel)]="charactorName">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Server</mat-label>
+    <mat-select #inputCharactorServer [(value)]="charactorServer">
+      <mat-option value="DIAMOND">DIAMOND</mat-option>
+      <mat-option value="PEARL">PEARL</mat-option>
+      <mat-option value="EMERALD">EMERALD</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-stroked-button color="primary" (click)="submit()">登録</button>
+</div>

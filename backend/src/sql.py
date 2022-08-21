@@ -5,8 +5,9 @@ DB_FILE_PATH = "../db/rating.db"
 
 
 def executeQuery(baseQuery,args = None, commitable = False):
-    print(__file__)
     connect = sqlite3.connect(DB_FILE_PATH)
+    connect.set_trace_callback(print)
+
     cursor = connect.cursor()
     result = None
     if args == None:
@@ -28,17 +29,23 @@ def insertPlayer(data):
     print(data["server"])
     if not models.SERVER.has_value(data["server"]):
         raise models.InvalidServerNameError
-
     name   = data["name"]
+    key    = data["key"]
     server = data["server"]
     info   = data.get("info","")
-    query  = "insert into players(name, server, info) values(?, ?, ?);"
-    res = executeQuery(query,(name,server,info), True)
+    query  = "insert into players(name, key, server, info) values(?, ?, ?, ?);"
+    res = executeQuery(query,(name,key,server,info), True)
     return res
 
 def getPlayers():
     query  = "select * from players"
     return executeQuery(query)
+
+def getPlayer(key:str):
+    query  = "select * from players where key = ?"
+    print(query)
+    print(key)
+    return executeQuery(query,(key,))
 
 def getPlayerId(chara_name, server):
     query  = "select id from players where name = ? and server = ? ;"
