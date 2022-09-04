@@ -1,6 +1,7 @@
+#!/bin/bash
 
 . bin/activate
 cd src
-uvicorn app:app
+uvicorn app:app --reload
 
 

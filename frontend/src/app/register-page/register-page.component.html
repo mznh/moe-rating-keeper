@@ -1,17 +1,28 @@
 <app-navi-bar> </app-navi-bar>
 
-<div class="create-charactor-form">
-  <mat-form-field appearance="fill">
-    <mat-label>キャラクター名</mat-label> 
-    <input matInput #inputCharactorName [(ngModel)]="charactorName">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Server</mat-label>
-    <mat-select #inputCharactorServer [(value)]="charactorServer">
-      <mat-option value="DIAMOND">DIAMOND</mat-option>
-      <mat-option value="PEARL">PEARL</mat-option>
-      <mat-option value="EMERALD">EMERALD</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-stroked-button color="primary" (click)="submit()">登録</button>
+<div class="charactor-page">
+  <div class="select-charactor-form">
+    キャラクターリスト
+    <div *ngFor="let player of saveData.players">
+      <a [routerLink]="['/pc']" [queryParams]="{ key: player.key}" > {{player.name}} </a>
+    </div>
+  </div>
+
+  <div class="create-charactor-form">
+    キャラクター登録
+    <mat-form-field appearance="fill">
+      <mat-label>キャラクター名</mat-label> 
+      <input matInput #inputCharactorName [(ngModel)]="charactorName">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Server</mat-label>
+      <mat-select #inputCharactorServer [(value)]="charactorServer">
+        <mat-option value="DIAMOND">DIAMOND</mat-option>
+        <mat-option value="PEARL">PEARL</mat-option>
+        <mat-option value="EMERALD">EMERALD</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="submit()">登録</button>
+    <button mat-stroked-button color="primary" (click)="delete()">リセット</button>
+  </div>
 </div>

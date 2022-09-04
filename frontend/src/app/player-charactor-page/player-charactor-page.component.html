@@ -1,3 +1,23 @@
 <app-navi-bar> </app-navi-bar>
 
+<div class="select-charactor-form">
+  キャラクターリスト
+  <div *ngFor="let player of saveData.players">
+    <a [routerLink]="['/pc']" [queryParams]="{ key: player.key}" > {{player.name}} </a>
+  </div>
+</div>
+
+<div class="player-info"> 
+  <div class="player-info-name"> Name: {{this.player.name}} </div>
+  <div class="player-info-token"> Token: {{this.player.token}} </div>
+  <div class="player-info-server"> Server: {{this.player.server}} </div>
+  <div class="player-info-rating"> Rating: hoge </div>
+</div>
+
+<div class="player-battle-log">
+  戦績
+  <div *ngFor="let battle of battleDataList">
+    {{battle.side_a_name}} VS {{battle.side_b_name}} : 勝者{{battle.winner_name}}
+  </div>
+</div>
 

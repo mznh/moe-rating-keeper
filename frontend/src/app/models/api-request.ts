@@ -1,10 +1,23 @@
+import {PlayerData,BattleData} from './data';
 
-
-export interface ResigterCharactorResult{
+export interface RegisterCharactorResult{
   status: string;
-  key: string| null;
+  player: PlayerData;
 };
 
-export interface CharactorInfo{
-  key: string|null;
-};
+
+export interface ResultOfRecordBattle{
+  status: string;
+}
+export interface RequestOfRecordBattle{
+  side_a_name: string;
+  side_a_token: string;
+  side_b_name: string;
+  side_b_token: string;
+  winner_token: string;
+}
+
+export interface ResultOfFetchBattle{
+  battles:BattleData[];
+
+}

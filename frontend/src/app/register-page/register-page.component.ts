@@ -3,8 +3,12 @@ import { NaviBarComponent } from '../navi-bar/navi-bar.component';
 import { MaterialsModule } from '../materials/materials.module';
 import { RatingService } from '../rating-service/rating.service';
 import { Observable, Subject } from 'rxjs';
-import { ResigterCharactorResult } from '../models/api-request';
+import { RegisterCharactorResult } from '../models/api-request';
 import { Router } from '@angular/router';
+import { 
+  SaveData, 
+  PlayerData, 
+  generateDefaultPlayerData} from '../models/data';
 
 @Component({
   selector: 'app-register-page',
@@ -14,8 +18,10 @@ import { Router } from '@angular/router';
 export class RegisterPageComponent implements OnInit {
   public charactorName:string;
   public charactorServer:string;
+  public saveData:SaveData;
 
   constructor( private router:Router, private ratingService:RatingService) {
+    this.saveData = this.ratingService.load();
     this.charactorName = "";
     this.charactorServer = "";
   }
@@ -25,12 +31,23 @@ export class RegisterPageComponent implements OnInit {
 
   submit(){
     this.ratingService.registerPlayerCharactor(this.charactorName,this.charactorServer).subscribe(
-      (msg:ResigterCharactorResult) => {
+      (msg:RegisterCharactorResult) => {
         if(msg.status === "ok"){
-          this.router.navigate(["/pc"], {queryParams: {key: msg.key}});
+          this.ratingService.saveNewPlayer(msg.player)
+          console.log(this.saveData);
+          this.router.navigate(["/pc"], {queryParams: {key: msg.player.key}});
         }
       }
     );
+  }
+  delete(){
+    this.ratingService.deleteSaveData();
+  }
+
+  getPlayerKeyList(){
+    return this.saveData.players.map((player:PlayerData) =>{
+      return player.key
+    })
   }
 
 }

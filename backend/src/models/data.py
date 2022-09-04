@@ -2,6 +2,7 @@ from typing import Union
 from pydantic import BaseModel
 from enum import Enum
 
+
 class Player(BaseModel): 
     name:  str
     server:  str
@@ -29,6 +30,7 @@ class RatingLog(BaseModel):
     player_id:  int
     style: int 
     rating:  float 
+    sigma: float
 
 class SERVER(Enum):
     DIAMOND = "DIAMOND"
